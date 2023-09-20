@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Total TKD</title>
+    <link rel="stylesheet" href="calificacion1.css" />
+    <style>
+      /* Estilo para ocultar calificacion2 inicialmente */
+      .calificacion2,
+      .promedio-total {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tarjeta" id="exactitud">
+      <h2>Tecnica</h2>
+      <label for="total"></label>
+      <span class="toTecnica" id="total">4.0</span>
+
+      <div class="button-container">
+        <div class="button-row1">
+          <button onclick="sumar(0.1)">+0.1</button>
+          <button onclick="sumar(0.3)">+0.3</button>
+        </div>
+        <div class="button-row2">
+          <button onclick="restar(0.1)">-0.1</button>
+          <button onclick="restar(0.3)">-0.3</button>
+        </div>
+      </div>
+      <button
+        class="button-siguiente"
+        onclick="siguiente('barras-calificacion')"
+      >
+        Siguiente
+      </button>
+    </div>
+
+    <div class="calificacion2" id="barras-calificacion">
+      <div class="tarjeta2">
+        <h2>Presentacion</h2>
+        <span class="toPresentacion" id="total-presentation">6.0</span>
+        <div class="calificacion-row">
+          <label for="fuerza-velocidad">Fuerza y Velocidad</label>
+          <div class="slider-container">
+            <input
+              type="range"
+              id="fuerza-velocidad"
+              step="0.1"
+              min="0"
+              max="2"
+              value="2.0"
+              oninput="actualizarSliders(this, 'fuerza-velocidad-value', 'fuerza-velocidad-rating')"
+            />
+            <span id="fuerza-velocidad-value">2.0</span>
+            <div class="bar">
+              <div class="fill"></div>
+            </div>
+            <h4 id="fuerza-velocidad-rating"></h4>
+          </div>
+        </div>
+        <div class="calificacion-row">
+          <label for="ritmo-tiempo">Ritmo y Tiempo</label>
+          <div class="slider-container">
+            <input
+              type="range"
+              id="ritmo-tiempo"
+              step="0.1"
+              min="0"
+              max="2"
+              value="2.0"
+              oninput="actualizarSliders(this, 'ritmo-tiempo-value', 'ritmo-tiempo-rating')"
+            />
+            <span id="ritmo-tiempo-value">2.0</span>
+            <div class="bar">
+              <div class="fill"></div>
+            </div>
+            <h4 id="ritmo-tiempo-rating"></h4>
+          </div>
+        </div>
+        <div class="calificacion-row">
+          <label for="energia">Expresion de energía</label>
+          <div class="slider-container">
+            <input
+              type="range"
+              id="energia"
+              step="0.1"
+              min="0"
+              max="2"
+              value="2.0"
+              oninput="actualizarSliders(this, 'energia-value', 'energia-rating')"
+            />
+            <span id="energia-value">2.0</span>
+            <div class="bar">
+              <div class="fill"></div>
+            </div>
+            <h4 id="energia-rating"></h4>
+          </div>
+        </div>
+        <button class="button-siguiente" onclick="siguiente('promedio-total')">
+          Siguiente
+        </button>
+      </div>
+    </div>
+
+    <div class="promedio-total" id="promedio-total">
+      <div class="tarjeta3">
+        <h2>Calificación Total</h2>
+        <p class="notafi">
+          La calificación total es:
+          <span class="sumafi" id="total-calificacion"></span>
+        </p>
+        <button class="button-siguiente" onclick="ocultar('promedio-total')">
+          Finalizar
+        </button>
+      </div>
+    </div>
+
+    <script>
+      var total = 4.0; // Valor inicial
+      var calificacionMaxima = 4.0; // Calificación máxima
+
+      // Función para restar
+      function restar(valor) {
+        total -= valor;
+        if (total < 0) {
+          total = 0;
+        }
+        actualizarTotal();
+      }
+
+      // Función para sumar
+      function sumar(valor) {
+        total += valor;
+        if (total > calificacionMaxima) {
+          total = calificacionMaxima;
+        }
+        actualizarTotal();
+      }
+
+      // Función para actualizar el valor en la página
+      function actualizarTotal() {
+        document.getElementById("total").textContent = total.toFixed(1);
+      }
+
+      function restablecerValoresIniciales() {
+        // Restablecer valores en la tarjeta de Técnica
+        document.getElementById("total").textContent = "4.0";
+
+        // Restablecer valores en la tarjeta de Presentación
+        document.getElementById("fuerza-velocidad").value = 2.0;
+        document.getElementById("fuerza-velocidad-value").textContent = "2.0";
+        document.getElementById("fuerza-velocidad-rating").textContent = "";
+        document.getElementById("ritmo-tiempo").value = 2.0;
+        document.getElementById("ritmo-tiempo-value").textContent = "2.0";
+        document.getElementById("ritmo-tiempo-rating").textContent = "";
+        document.getElementById("energia").value = 2.0;
+        document.getElementById("energia-value").textContent = "2.0";
+        document.getElementById("energia-rating").textContent = "";
+
+        // Restablecer valores en la sección de Calificación Total
+        document.getElementById("total-calificacion").textContent = "";
+      }
+
+      // Función para cambiar a la siguiente sección
+      function siguiente(idSiguiente) {
+        // Oculta todas las secciones
+        document.getElementById("exactitud").style.display = "none";
+        document.getElementById("barras-calificacion").style.display = "none";
+        document.getElementById("promedio-total").style.display = "none";
+
+        // Muestra la sección de destino
+        document.getElementById(idSiguiente).style.display = "block";
+
+        // Llama a la función para actualizar los sliders
+        actualizarSliders();
+      }
+
+      // Función para ocultar una sección y mostrar la sección de Exactitud
+      function ocultar(idSeccion) {
+        // Restablecer valores iniciales
+        restablecerValoresIniciales();
+
+        // Oculta la sección
+        document.getElementById(idSeccion).style.display = "none";
+
+        // Muestra la sección de Exactitud
+        document.getElementById("exactitud").style.display = "block";
+      }
+
+      // Función para actualizar los valores de los sliders
+      function actualizarSliders() {
+        actualizarSlidersById(
+          "fuerza-velocidad",
+          "fuerza-velocidad-value",
+          "fuerza-velocidad-rating"
+        );
+        actualizarSlidersById(
+          "ritmo-tiempo",
+          "ritmo-tiempo-value",
+          "ritmo-tiempo-rating"
+        );
+        actualizarSlidersById("energia", "energia-value", "energia-rating");
+      }
+
+      // Función para actualizar los valores de un slider por su id y actualizar la clasificación
+      // Función para actualizar los valores de un slider por su id y actualizar la clasificación
+      function actualizarSlidersById(sliderId, spanId, ratingId) {
+        var sliderValue = parseFloat(
+          document.getElementById(sliderId).value
+        ).toFixed(1);
+        document.getElementById(spanId).textContent = sliderValue;
+
+        // Clasificación según los rangos
+        // Clasificación según los rangos
+        var ratingElement = "";
+        if (sliderValue >= 0 && sliderValue < 0.5) {
+          ratingElement = "Malo";
+          document.getElementById(ratingId).style.color = "red";
+        } else if (sliderValue >= 0.5 && sliderValue < 0.9) {
+          ratingElement = "Regular";
+          document.getElementById(ratingId).style.color = "orange";
+        } else if (sliderValue >= 0.9 && sliderValue < 1.3) {
+          ratingElement = "Bueno";
+          document.getElementById(ratingId).style.color = "black";
+        } else if (sliderValue >= 1.3 && sliderValue < 1.6) {
+          ratingElement = "Muy Bueno";
+          document.getElementById(ratingId).style.color = "lightgreen";
+        } else {
+          ratingElement = "Excelente";
+          document.getElementById(ratingId).style.color = "green";
+        }
+
+        // Mostrar la clasificación en el h4 correspondiente
+        document.getElementById(ratingId).textContent = ratingElement;
+
+        // Actualizar el total en la sección de Presentación
+        var totalPresentation =
+          parseFloat(document.getElementById("fuerza-velocidad").value) +
+          parseFloat(document.getElementById("ritmo-tiempo").value) +
+          parseFloat(document.getElementById("energia").value);
+        document.getElementById("total-presentation").textContent =
+          totalPresentation.toFixed(1);
+
+        // Actualizar la suma total
+        var totalTecnica = parseFloat(
+          document.getElementById("total").textContent
+        );
+        var totalPresentacion = parseFloat(
+          document.getElementById("total-presentation").textContent
+        );
+        var totalCalificacion = totalTecnica + totalPresentacion;
+        document.getElementById("total-calificacion").textContent =
+          totalCalificacion.toFixed(1);
+      }
+    </script>
+  </body>
+</html>
