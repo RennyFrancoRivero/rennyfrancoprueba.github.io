@@ -1,0 +1,49 @@
+body {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: url("img/fondogirasoles.jpg") no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.tarjeta-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Permitir que las tarjetas se ajusten en una línea */
+}
+
+.tarjeta {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  background: rgb(245, 243, 243);
+  border: 2px solid rgba(75, 75, 75, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(75px);
+  display: flex;
+  margin: 40px;
+  justify-content: center;
+  align-items: center;
+}
+h4 {
+  font-family: "Brush Script MT", cursive;
+  font-size: 48px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 57.6px;
+  color: rgb(22, 22, 22);
+}
+
+.parrafo {
+  margin: 15px;
+}
